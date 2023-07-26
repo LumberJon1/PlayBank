@@ -5,8 +5,25 @@ import { useState } from 'react'
 export default function Home() {
 
   // State management for transact button
-  const [formHidden, setFormHidden] = useState(true);
+  const [formHidden, setFormHidden] = useState(false);
 
+  // State management for form inputs within transact modal
+  const [amountValue, setAmountValue] = useState(0)
+
+
+  // Handler for the input value of the form changing with client input
+  function handleFormChange(event) {
+    setAmountValue(event.target.innerHTML);
+    console.log("changed value to "+event.target.innerHTML)
+  }
+
+
+  // Handler for the transaction form submission
+  function handleFormSubmit(event) {
+    event.preventDefault();
+    console.log("Submitted "+amountValue);
+    setFormHidden(true);
+  }
 
   // Handler for onClick event for transact button
   function handleTransactClick() {
@@ -37,21 +54,45 @@ export default function Home() {
           <div 
             className='fixed top-1/3 rounded-lg shadow-lg z-10 bg-slate-200 flex flex-col items-center justify-center p-3 w-3/4 h-1/3'
           >
-            <div className='w-full'>
+            <div className='w-full h-1/4'>
               <button
-                className='bg-slate-400 w-1/2 p-1'
+                className='bg-slate-700 w-1/2 text-zinc-100 p-1'
                 onClick={console.log("Clicked purchase button.")}
               >
                 Purchase
               </button>
               <button
-                className='bg-amber-400 w-1/2 p-1'
+                className='bg-fuchsia-700 text-zinc-100 w-1/2 p-1'
                 onClick={console.log("Clicked deposit button.")}
               >
                 Deposit
               </button>
             </div>
-            Form
+            <form action=""
+              className='flex flex-col items-center justify-around w-full h-3/4'
+            >
+              <label htmlFor="amount">
+                Transaction Amount
+              </label>
+              <div
+                className='flex w-1/2 items-center justify-center'
+              >
+                $
+                <input
+                  id="amount"
+                  name="amount"
+                  type="number"
+                  onChange={handleFormChange}
+                  value={amountValue}  
+                />
+              </div>
+              <button
+                className='border-emerald-500 bg-emerald-400 rounded-lg'
+                onClick={handleFormSubmit}
+              >
+                Submit
+              </button>
+            </form>
           </div>
         }
         {/* Transaction History Section */}
