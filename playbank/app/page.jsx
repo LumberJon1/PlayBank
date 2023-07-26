@@ -10,13 +10,26 @@ export default function Home() {
   // State management for form inputs within transact modal
   const [amountValue, setAmountValue] = useState(0)
 
+  // State management for the deposit or purchase toggle
+  const [transactionType, setTransactionType] = useState("Purchase")
+
+
+  // Handlers for the deposit and purchase buttons
+  function handleDepositClick() {
+    setTransactionType("Deposit");
+    console.log("Set transaction type to Deposit");
+  }
+  
+  function handlePurchaseClick() {
+    setTransactionType("Purchase");
+    console.log("Set transaction type to Purchase");
+  }
 
   // Handler for the input value of the form changing with client input
   function handleFormChange(event) {
-    setAmountValue(event.target.innerHTML);
-    console.log("changed value to "+event.target.innerHTML)
+    setAmountValue(event.target.value);
+    console.log("changed value to "+event.target.value)
   }
-
 
   // Handler for the transaction form submission
   function handleFormSubmit(event) {
@@ -28,6 +41,7 @@ export default function Home() {
   // Handler for onClick event for transact button
   function handleTransactClick() {
     console.log("Clicked and setting state from "+formHidden);
+    setAmountValue(0);
     setFormHidden (!formHidden);
   }
 
@@ -57,13 +71,13 @@ export default function Home() {
             <div className='w-full h-1/4'>
               <button
                 className='bg-slate-700 w-1/2 text-zinc-100 p-1'
-                onClick={console.log("Clicked purchase button.")}
+                onClick={handlePurchaseClick}
               >
                 Purchase
               </button>
               <button
                 className='bg-fuchsia-700 text-zinc-100 w-1/2 p-1'
-                onClick={console.log("Clicked deposit button.")}
+                onClick={handleDepositClick}
               >
                 Deposit
               </button>
@@ -87,6 +101,7 @@ export default function Home() {
                 />
               </div>
               <button
+                type="submit"
                 className='border-emerald-500 bg-emerald-400 rounded-lg'
                 onClick={handleFormSubmit}
               >
